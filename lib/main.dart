@@ -70,8 +70,8 @@ class BigCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final pour les variables qui ne changeront pas, on peut aussi utiliser const
     final theme = Theme.of(context);
+    final style = theme.textTheme.displayMedium!.copyWith(color: theme.colorScheme.onPrimary,);
     final random = Random();
     final color = Color.fromARGB(
       255,
@@ -80,20 +80,14 @@ class BigCard extends StatelessWidget {
       random.nextInt(256),
     );
     return Card(
-      // ajouter et random color
-      //color: theme.colorScheme.primary,
-      //child: Padding(
-      // padding: const EdgeInsets.all(20), //
-      //child: Text(pair.asLowerCase),
-
       color: color,
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Text(
-          pair.asLowerCase,
-          style: TextStyle(
-            color: theme.colorScheme.onPrimary,
-          ),
+          pair.asLowerCase, style: style
+          //style: TextStyle(
+          //  color: theme.colorScheme.onPrimary,
+         // ),
         ),
       ),
     );
