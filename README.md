@@ -1,4 +1,4 @@
-# generator random text
+# Generator random text
 
 A new Flutter project.
 
