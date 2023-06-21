@@ -49,15 +49,27 @@ class MyAppState extends ChangeNotifier {
 
 class MyHomePage extends StatefulWidget {
   @override
-  //"_" classe privée 
+  //"_" classe privée
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var selectedIndex = 0; 
+  var selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    Widget page;
+    switch (selectedIndex) {
+      case 0:
+        page = GeneratorPage();
+        break;
+      case 1:
+        page = Placeholder();
+        break;
+      default:
+        throw UnimplementedError('no Widget for $selectedIndex');
+    }
+
     return Scaffold(
       body: Row(
         children: [
@@ -76,16 +88,16 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
               selectedIndex: selectedIndex,
               onDestinationSelected: (value) {
-               setState(() {
-                 selectedIndex = value;
-               });
+                setState(() {
+                  selectedIndex = value;
+                });
               },
             ),
           ),
           Expanded(
             child: Container(
               color: Theme.of(context).colorScheme.primaryContainer,
-              child: GeneratorPage(),
+              child: page,
             ),
           ),
         ],
