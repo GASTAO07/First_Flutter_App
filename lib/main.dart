@@ -1,6 +1,7 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:math';
 
 void main() {
   runApp(MyApp());
@@ -17,7 +18,8 @@ class MyApp extends StatelessWidget {
         title: 'Generate text',
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 34, 237, 255)),
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: const Color.fromARGB(255, 34, 237, 255)),
         ),
         home: MyHomePage(),
       ),
@@ -68,16 +70,31 @@ class BigCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final pour les variables qui ne changeront pas, on peut aussi utiliser const 
-
+    // final pour les variables qui ne changeront pas, on peut aussi utiliser const
     final theme = Theme.of(context);
-
+    final random = Random();
+    final color = Color.fromARGB(
+      255,
+      random.nextInt(256),
+      random.nextInt(256),
+      random.nextInt(256),
+    );
     return Card(
-      // ajouter et random color 
-      color: theme.colorScheme.primary,
+      // ajouter et random color
+      //color: theme.colorScheme.primary,
+      //child: Padding(
+      // padding: const EdgeInsets.all(20), //
+      //child: Text(pair.asLowerCase),
+
+      color: color,
       child: Padding(
-        padding: const EdgeInsets.all(20), //
-        child: Text(pair.asLowerCase),
+        padding: const EdgeInsets.all(20),
+        child: Text(
+          pair.asLowerCase,
+          style: TextStyle(
+            color: theme.colorScheme.onPrimary,
+          ),
+        ),
       ),
     );
   }
