@@ -109,8 +109,9 @@ class MyHomePage extends StatelessWidget {
       body: Row(
         children: [
           SafeArea(
+            // Quand faut-il extraire un widget ? 
             child: NavigationRail(
-              extended: false,
+              extended: true,
               destinations: [
                 NavigationRailDestination(
                   icon: Icon(Icons.home),
@@ -161,8 +162,6 @@ class GeneratorPage extends StatelessWidget {
             // SizeBox pour séparer
             SizedBox(height: 10),
             Row(
-              // Yoo ne t'occupe pas de tout l'espace hozintal = MainAxisAlignment
-              // mais met lui au centre
               mainAxisSize: MainAxisSize.min,
               children: [
                 Row(
@@ -177,7 +176,6 @@ class GeneratorPage extends StatelessWidget {
                     SizedBox(width: 10),
                     ElevatedButton(
                       onPressed: () {
-                        // print('button pressed !');
                         appState.getNext();
                       },
                       child: Text('Next'),
