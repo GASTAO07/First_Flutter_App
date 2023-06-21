@@ -34,6 +34,17 @@ class MyAppState extends ChangeNotifier {
     current = WordPair.random();
     notifyListeners();
   }
+
+  var favorites = <WordPair>[];
+
+  void toogleFavorite() {
+    if (favorites.contains(current)) {
+      favorites.remove(current);
+    } else {
+      favorites.add(current);
+    }
+    notifyListeners();
+  }
 }
 
 class MyHomePage extends StatelessWidget {
@@ -43,18 +54,20 @@ class MyHomePage extends StatelessWidget {
     var pair = appState.current;
 
     return Scaffold(
-      body: Column(
-        children: [
-          Text('A random AWESOME idea: '),
-          BigCard(pair: pair),
-          ElevatedButton(
-            onPressed: () {
-              // print('button pressed !');
-              appState.getNext();
-            },
-            child: Text('Next'),
-          ),
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            BigCard(pair: pair),
+            ElevatedButton(
+              onPressed: () {
+                // print('button pressed !');
+                appState.getNext();
+              },
+              child: Text('Next'),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -71,7 +84,9 @@ class BigCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final style = theme.textTheme.displayMedium!.copyWith(color: theme.colorScheme.onPrimary,);
+    final style = theme.textTheme.displayMedium!.copyWith(
+      color: theme.colorScheme.onPrimary,
+    );
     final random = Random();
     final color = Color.fromARGB(
       255,
@@ -87,8 +102,8 @@ class BigCard extends StatelessWidget {
           pair.asLowerCase, style: style,
           //style: TextStyle(
           //  color: theme.colorScheme.onPrimary,
-         // ),
-         semanticsLabel: "${pair.first} ${pair.second}",
+          // ),
+          semanticsLabel: "${pair.first} ${pair.second}",
         ),
       ),
     );
