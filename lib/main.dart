@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => MyAppState(),
       child: MaterialApp(
-        title: 'Generate text',
+        title: 'Generate text here',
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(
@@ -64,48 +64,73 @@ class _MyHomePageState extends State<MyHomePage> {
         page = GeneratorPage();
         break;
       case 1:
-        page = Placeholder();
+        page = FavoritesPage();
         break;
       default:
         throw UnimplementedError('no Widget for $selectedIndex');
     }
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Scaffold(
-          body: Row(
-            children: [
-              SafeArea(
-                child: NavigationRail(
-                  extended: true,
-                  destinations: [
-                    NavigationRailDestination(
-                      icon: Icon(Icons.home),
-                      label: Text('Home'),
-                    ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.favorite),
-                      label: Text('Favorites'),
-                    ),
-                  ],
-                  selectedIndex: selectedIndex,
-                  onDestinationSelected: (value) {
-                    setState(() {
-                      selectedIndex = value;
-                    });
-                  },
-                ),
+    return LayoutBuilder(builder: (context, constraints) {
+      return Scaffold(
+        body: Row(
+          children: [
+            SafeArea(
+              child: NavigationRail(
+                extended: true,
+                destinations: [
+                  NavigationRailDestination(
+                    icon: Icon(Icons.home),
+                    label: Text('Home'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.favorite),
+                    label: Text('Favorites'),
+                  ),
+                ],
+                selectedIndex: selectedIndex,
+                onDestinationSelected: (value) {
+                  setState(() {
+                    selectedIndex = value;
+                  });
+                },
               ),
-              Expanded(
-                child: Container(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  child: page,
-                ),
+            ),
+            Expanded(
+              child: Container(
+                color: Theme.of(context).colorScheme.primaryContainer,
+                child: page,
               ),
-            ],
-          ),
-        );
-      }
+            ),
+          ],
+        ),
+      );
+    });
+  }
+}
+
+
+class FavoritesPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context){
+    var appState = context.watch<MyAppState>();
+    if(appState.favorites.isEmpty){
+      return Center(
+        child : Text('No favorites yet'),
+      );
+    }
+
+    return ListView(
+      children: [
+        // EdgeInsets = espace entre 
+        Padding(padding: const EdgeInsets.all(20),
+        child: Text('You have' '${appState.favorites.length} favorites'),
+        ),
+        for (var pair in appState.favorites)
+        ListTile(
+          leading: Icon(Icons.favorite),
+          title: Text(pair.asLowerCase),
+        ),
+      ],
     );
   }
 }
@@ -128,6 +153,11 @@ class GeneratorPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(
+              'Voici un mot aléatoire :',
+              style: TextStyle(fontSize: 20),
+            ),
+            // Affiche le mot aléatoire
             BigCard(pair: pair),
             // SizeBox pour séparer
             SizedBox(height: 10),
@@ -150,6 +180,7 @@ class GeneratorPage extends StatelessWidget {
                       },
                       child: Text('Next'),
                     ),
+                    SizedBox(width: 10),
                   ],
                 ),
               ],
@@ -189,7 +220,7 @@ class BigCard extends StatelessWidget {
         child: Text(
           pair.asLowerCase,
           style: style,
-          semanticsLabel: "${pair.first} ${pair.second}",
+          semanticsLabel: " this is ${pair.first} ${pair.second}",
         ),
       ),
     );
