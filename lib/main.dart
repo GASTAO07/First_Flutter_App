@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => MyAppState(),
       child: MaterialApp(
-        title: 'Generate text here',
+        title: 'Geneger du text',
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(
@@ -49,7 +49,6 @@ class MyAppState extends ChangeNotifier {
 
 class MyHomePage extends StatefulWidget {
   @override
-  //"_" classe privée
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
@@ -67,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = FavoritesPage();
         break;
       default:
-        throw UnimplementedError('no Widget for $selectedIndex');
+        throw UnimplementedError('pas de Widget pour $selectedIndex');
     }
 
     return LayoutBuilder(builder: (context, constraints) {
@@ -108,28 +107,27 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-
 class FavoritesPage extends StatelessWidget {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
-    if(appState.favorites.isEmpty){
+    if (appState.favorites.isEmpty) {
       return Center(
-        child : Text('No favorites yet'),
+        child: Text("Il n'y a pas encore des favorits"),
       );
     }
 
     return ListView(
       children: [
-        // EdgeInsets = espace entre 
-        Padding(padding: const EdgeInsets.all(20),
-        child: Text('You have' '${appState.favorites.length} favorites'),
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: Text('Vous avez ' '${appState.favorites.length} favorits'),
         ),
         for (var pair in appState.favorites)
-        ListTile(
-          leading: Icon(Icons.favorite),
-          title: Text(pair.asLowerCase),
-        ),
+          ListTile(
+            leading: Icon(Icons.favorite),
+            title: Text(pair.asLowerCase),
+          ),
       ],
     );
   }
@@ -157,9 +155,7 @@ class GeneratorPage extends StatelessWidget {
               'Voici un mot aléatoire :',
               style: TextStyle(fontSize: 20),
             ),
-            // Affiche le mot aléatoire
             BigCard(pair: pair),
-            // SizeBox pour séparer
             SizedBox(height: 10),
             Row(
               mainAxisSize: MainAxisSize.min,
@@ -171,14 +167,14 @@ class GeneratorPage extends StatelessWidget {
                         appState.toogleFavorite();
                       },
                       icon: Icon(icon),
-                      label: Text('Like'),
+                      label: Text("J'aime"),
                     ),
                     SizedBox(width: 10),
                     ElevatedButton(
                       onPressed: () {
                         appState.getNext();
                       },
-                      child: Text('Next'),
+                      child: Text('Prochain'),
                     ),
                     SizedBox(width: 10),
                   ],
@@ -220,7 +216,7 @@ class BigCard extends StatelessWidget {
         child: Text(
           pair.asLowerCase,
           style: style,
-          semanticsLabel: " this is ${pair.first} ${pair.second}",
+          semanticsLabel: "${pair.first} ${pair.second}",
         ),
       ),
     );
