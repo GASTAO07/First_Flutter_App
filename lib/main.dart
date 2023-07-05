@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:notnetflix/repository/data_repository.dart';
 import 'package:notnetflix/ui/screens/home_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => DataRepository(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -12,8 +19,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false, // cacher le truc rouge de debeug 
+      title: 'Not netflix',
+      debugShowCheckedModeBanner: false, // cacher le truc rouge de debeug
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
